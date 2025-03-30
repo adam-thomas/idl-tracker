@@ -9,16 +9,17 @@ help:
 	@echo " make run            -- run idl-tracker at localhost:8000"
 
 install:
-	pip install -r requirements.txt
+	python3 -m venv .
+	bin/pip install -r requirements.txt
 	if [ `psql -t -c "SELECT COUNT(1) FROM pg_catalog.pg_database WHERE datname = 'idl_tracker'"` -eq 0 ]; then \
 		psql  -c "CREATE DATABASE idl_tracker"; \
 	fi
-	python manage.py migrate
-	python manage.py createsuperuser
+	bin/python manage.py migrate
+	bin/python manage.py createsuperuser
 	npm install
 
 test:
 	@python manage.py test --keepdb --verbosity=$(verbosity)
 
 run:
-	@python manage.py runserver
+	@DEBUG=1 python manage.py runserver
