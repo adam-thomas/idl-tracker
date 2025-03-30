@@ -1,0 +1,354 @@
+.idl-tracker {
+    width: 100%;
+    height: 100%;
+    position: relative;
+
+    display: flex;
+
+    .context-click-away-overlay {
+        position: absolute;
+        left: 0;
+        top: 0;
+
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+    }
+
+    nav.react-contextmenu {
+        min-width: 100px;
+
+        background-color: @white;
+        border: 1px solid @text-light;
+        box-shadow: 2px 2px 5px @text-light;
+        z-index: 2;
+
+        .react-contextmenu-item {
+            &:not(&--divider) {
+                padding: 10px 15px;
+
+                cursor: pointer;
+
+                &:hover {
+                    background-color: @background-shade-1;
+                }
+            }
+
+            &--divider {
+                margin: 5px 5px;
+                border-bottom: 1px solid @text-light;
+            }
+        }
+    }
+
+    .task-container-wrapper {
+        width: 100%;
+        height: 100%;
+        flex: 0 1 auto;
+        z-index: 0;
+
+        padding: 0;
+        overflow-y: auto;
+
+        display: flex;
+        flex-flow: row;
+        align-items: flex-start;
+
+        .task-column {
+            width: 100%;
+            height: 100%;
+            flex: 0 1 auto;
+
+            padding: 10px 0;
+
+            display: flex;
+            flex-flow: column;
+            justify-content: flex-start;
+
+            &:not(:last-of-type) {
+                width: 300px;
+                flex: 0 0 auto;
+
+                .heading-wrapper .heading {
+                    // Fix the width so that the ellipsis truncation works correctly.
+                    width: calc(100% - 45px);
+                }
+            }
+
+            &:last-of-type {
+                .heading-wrapper .heading {
+                    // Fix the width so that the ellipsis truncation works correctly.
+                    width: calc(100% - 45px);
+                    max-width: 435px;
+                }
+            }
+
+            .column-shade(@colour-dark, @colour-light) {
+                background-color: @colour-dark;
+
+                .child-task-list-wrapper li.task-wrapper.active {
+                    background-image: linear-gradient(to right, @colour-dark, @colour-light 30%);
+                    border-left-color: @colour-dark;
+                    border-right-color: @colour-light;
+                }
+            }
+
+            &:nth-last-child(2) {
+                .column-shade(@background-shade-1, @background);
+            }
+
+            &:nth-last-child(3) {
+                .column-shade(@background-shade-2, @background-shade-1);
+            }
+
+            &:nth-last-child(n+4) {
+                .column-shade(@background-shade-3, @background-shade-2);
+            }
+
+            .heading-wrapper {
+                padding: 0 11px;
+                flex: 0 0 auto;
+                margin-bottom: 10px;
+
+                display: flex;
+                flex-flow: row;
+                justify-content: flex-start;
+                align-items: center;
+
+                .close-button {
+                    // Use off-centre padding to account for the letter position of the X
+                    padding: 4px 5px 6px 5px;
+                    margin-right: 15px;
+                    width: 30px;
+                    height: 30px;
+                    flex: 0 0 auto;
+                }
+
+                .heading {
+                    padding: 5px;
+                    flex: 0 0 auto;
+
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+
+                    .font-face-title();
+                    .font-size-large();
+                }
+            }
+
+            .child-task-list-wrapper {
+                width: 100%;
+                height: 100%;
+                flex: 0 1 auto;
+                overflow-y: auto;
+
+                &::-webkit-scrollbar {
+                    background: transparent;
+                    width: 4px;
+                }
+                &::-webkit-scrollbar-button {
+                    display: none;
+                }
+                &::-webkit-scrollbar-track {
+                    background: transparent;
+                }
+                &::-webkit-scrollbar-track-piece {
+                    background: transparent;
+                }
+                &::-webkit-scrollbar-thumb {
+                    background-color: fade(@text-dark, 70%);
+                }
+
+                ul {
+                    list-style: none;
+
+                    display: flex;
+                    flex-flow: column;
+                    align-items: flex-start;
+
+                    li.task-wrapper {
+                        width: 100%;
+
+                        &.active {
+                            font-weight: bold;
+                        }
+
+                        .main-row {
+                            min-height: 35px;
+                            width: 100%;
+
+                            padding: 8px 10px;
+                            border: 1px solid transparent;
+
+                            position: relative;
+                            user-select: none;
+
+                            display: flex;
+                            flex-flow: column;
+                            align-items: flex-start;
+                            justify-content: center;
+
+                            &:not(.active):hover, &.hover-lock {
+                                background-color: fade(@text-dark, 10%);
+                            }
+
+                            &:not(.active):hover .task-entry .caret-wrapper .caret {
+                                border-width: 2px;
+                            }
+
+                            .checkbox-wrapper {
+                                width: 30px;
+                                height: 30px;
+                                margin-right: 8px;
+                                flex: 0 0 auto;
+
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+
+                                cursor: pointer;
+
+                                .imitation-checkbox {
+                                    width: 20px;
+                                    height: 20px;
+
+                                    border: 1px solid @text-dark;
+                                    box-shadow: 0 0 2px @text-light inset;
+                                    border-radius: 10px;
+                                    background-color: fade(@white, 50%);
+
+                                    &.checked {
+                                        background-color: @checked-green;
+                                        box-shadow: 0 0 3px @checked-green-shade inset;
+                                    }
+                                }
+
+                                &:hover {
+                                    .imitation-checkbox {
+                                        border: 2px solid @text-dark;
+                                    }
+                                }
+                            }
+
+                            .task-entry {
+                                display: flex;
+                                flex-flow: row;
+                                align-items: center;
+
+                                height: 100%;
+                                width: 100%;
+                                min-height: 35px;
+
+                                cursor: pointer;
+                                z-index: 0;
+
+                                .task-text {
+                                    width: 100%;
+                                    flex: 0 1 auto;
+
+                                    a, a:active, a:visited {
+                                        color: @text-dark;
+
+                                        &:hover {
+                                            color: @contrast-red;
+                                        }
+                                    }
+                                }
+
+                                .caret-wrapper {
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+
+                                    height: 100%;
+                                    width: 18px;
+                                    margin-left: 5px;
+
+                                    .caret {
+                                        width: 10px;
+                                        height: 10px;
+                                        flex: 0 0 auto;
+
+                                        border-right: 1px solid @text-dark;
+                                        border-bottom: 1px solid @text-dark;
+                                        transform: rotate(-45deg);
+                                    }
+                                }
+
+                                &.edit-form {
+                                    align-items: flex-end;
+
+                                    textarea {
+                                        min-height: 65px;
+                                    }
+
+                                    .actions {
+                                        margin-left: 5px;
+
+                                        display: flex;
+                                        flex-flow: column;
+                                        gap: 5px;
+
+                                        button.submit {
+                                            height: 30px;
+                                            width: 30px;
+                                            flex: 0 0 auto;
+
+                                            font-size: 15px;
+                                        }
+                                    }
+                                }
+                            }
+
+                            .dropzone-container {
+                                position: absolute;
+                                left: 0;
+                                top: -5px;
+                                width: 100%;
+                                height: calc(100% + 10px);
+
+                                z-index: 1;
+
+                                display: flex;
+                                flex-flow: column;
+
+                                .dropzone {
+                                    width: 100%;
+
+                                    &.highlight {
+                                        background-color: fade(@contrast-red, 50%);
+                                    }
+
+                                    &.before, &.after {
+                                        height: 25%;
+                                    }
+
+                                    &.in {
+                                        height: 50%;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+
+        .task-form-wrapper {
+            padding: 5px 10px;
+            flex: 0 0 auto;
+
+            display: flex;
+            flex-flow: row;
+            align-items: flex-end;
+            gap: 10px;
+
+            button {
+                height: 38px;
+                font-weight: bold;
+            }
+        }
+    }
+}

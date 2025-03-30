@@ -1,0 +1,23 @@
+# Python compile files
+__pycache__/
+.py[cod]
+
+# Virtualenv files
+bin/
+include
+lib/
+lib64
+pyvenv.cfg
+share/
+
+# Editor files
+src/
+.vscode
+
+# npm output
+node_modules
+package-lock.json
+
+# Build output
+static/js/react.js
+staticfiles

@@ -1,0 +1,44 @@
+{
+  "name": "idl-tracker",
+  "version": "0.0.1",
+  "description": "A Django implementation of a Stratz tracker for IDL.",
+  "main": "index.js",
+  "repository": "git@github.com:adam-thomas/idl-tracker.git",
+  "author": "Adam Thomas <adamthomas@e3d-online.com>",
+  "license": "MIT",
+  "private": false,
+  "devDependencies": {
+    "@babel/core": "^7.7.2",
+    "@babel/plugin-proposal-class-properties": "^7.7.0",
+    "@babel/plugin-proposal-decorators": "^7.7.0",
+    "@babel/preset-env": "^7.7.1",
+    "@babel/preset-react": "^7.7.0",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-mobx": "^2.0.0",
+    "css-loader": "^3.4.1",
+    "less": "^3.10.3",
+    "less-loader": "^5.0.0",
+    "style-loader": "^1.1.2",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
+  },
+  "dependencies": {
+    "django-react-csrftoken": "^1.0.4",
+    "jquery": "^3.4.1",
+    "mobx": "^5.15.0",
+    "mobx-react": "^6.1.4",
+    "react": "^16.11.0",
+    "react-contextmenu": "^2.14.0",
+    "react-dom": "^16.11.0",
+    "react-router": "^6.20.1",
+    "react-router-dom": "^6.20.1"
+  },
+  "scripts": {
+    "dev": "webpack --mode development ./react/main.js --output ./idl_tracker/static/js/react.js --config webpack.dev.js",
+    "build": "webpack --mode production ./react/main.js --output ./idl_tracker/static/js/react.js --config webpack.prod.js"
+  },
+  "engines": {
+    "node": "16.x"
+  }
+}

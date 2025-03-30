@@ -1,0 +1,9 @@
+{% extends "idl_tracker/base.html" %}
+
+{% block body %}
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">Log in</button>
+    </form>
+{% endblock body %}

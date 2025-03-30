@@ -1,0 +1,47 @@
+button, .button, textarea, .textarea {
+    outline: none;
+
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: center;
+}
+
+button, .button {
+    padding: 5px 10px;
+    color: @text-button;
+    cursor: pointer;
+
+    background-color: fade(@white, 50%);
+    border: none;
+    border-radius: 5px;
+
+    &:hover:not(:disabled):not(.disabled):not(.active) {
+        background-color: @white;
+        color: @text-dark;
+    }
+
+    &.active {
+        color: @white;
+    }
+
+    &:focus, &:active {
+        outline: none;
+    }
+}
+
+textarea, .textarea {
+    width: 100%;
+    max-width: 500px;
+    padding: 8px;
+
+    border: 1px solid @text-button;
+    border-radius: 5px;
+    background-color: fade(@white, 50%);
+
+    .font-base();
+
+    &:focus {
+        border-color: @text-dark;
+    }
+}
